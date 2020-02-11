@@ -6,7 +6,7 @@ Api Twitter prover um serviço simplificado, escalável e de grande perfomance p
 
 ### Tecnologias
 
-Api Twitter utiliza alguns outras bibliotecas open source, são eles:
+Api Twitter utiliza alguns outras bibliotecas open source, são elas:
 
 * [Leininger] - Conhece o Mavem para Java, Gems para Ruby? Bom é isso que o Leininger é para o Clojure
 * [Ring] - Uma biblioteca para aplicações Web
