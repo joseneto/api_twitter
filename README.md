@@ -14,7 +14,7 @@ Api Twitter utiliza alguns outras bibliotecas open source, são elas:
 * [Midje] - Excelente framework de testes para o Clojure
 * [Monger] - MongoDB cliente para Clojure com vasta documentação
 
-Api Twitter também é um projeto open source,, pode baixar, usar aprender bastante com ele.
+Api Twitter também é um projeto open source, você pode baixar, usar e aprender bastante com ele.
  
 
 ### Instalação
