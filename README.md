@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-Api Twitter prover um serviço simplificado, escalável e de grande perfomance para os recusros mais comuns do Twitter
+Api Twitter prover um serviço simplificado, escalável e de grande perfomance para os recursos mais comuns do Twitter
 
 ### Tecnologias
 
@@ -105,7 +105,7 @@ $ lein midje :filter -acceptance
 
 O projeto foi dividido em algumas camadas sendo assim temos:
 
-* [src/api_twitter/core.clj] - Esse aqui é digamos nosso main do projeto onde todas as requisições empacotadas e nossas rotas criadas
+* [src/api_twitter/core.clj] - Esse aqui é digamos nosso main do projeto onde todas as requisições são empacotadas e nossas rotas criadas
 * [src/api_twitter/user_service.clj] - Esse arquivo recebe todas as requisições relacionadas ao usuários fazendo o envio para o banco de dados
 * [src/api_twitter/twitter_service.clj] - Esse arquivo recebe todas as requisições relacionadas aos twitters fazendo o envio para o banco de dados
 * [src/api_twitter/db.clj] - Realiza a conexão com o MongoDB e realiza todos os acessos a base
@@ -115,8 +115,8 @@ O projeto foi dividido em algumas camadas sendo assim temos:
 
 #### Sobre o desafio técnico
 
-Esse desafio técnico me surpreendeu, não poder utilizar um linguagem que você está acustumado me pegou de surpresa, mas foi uma surpresa boa, condizente com a vaga ofertada, foi o meu primeiro contato com uma liguagem funcional e adorei a experiência. Um novo aprendizado que pretendo evoluir e levar comigo para onde for.
-Achei estranho no inicio, tipo como contruir um sistema só com funções? Depois fui me acustumando, não tive tanto tempo assim, mas deu para sentir que é possível criar sistemas de confiança com o Clojure.
+Como assim assim só funções??! Bem vindo a linguagem funcional. Esse desafio técnico me surpreendeu bastante, não poder utilizar um linguagem que você está acustumado me pegou de surpresa, mas foi uma surpresa boa, condizente com a vaga ofertada, foi o meu primeiro contato com uma liguagem funcional e adorei a experiência. Um novo aprendizado que pretendo evoluir e levar comigo para sempre.
+
 
 
 
