@@ -7,37 +7,39 @@
   (db/find-user content))
 
 (defn valid-register [user-register]
-  (and (contains? user-register	:username)
+  (and (contains? user-register	:user-name)
        (contains? user-register :email)
-       (contains? user-register	:pass_hash)
-       (not (clojure.string/blank? (user-register :username)))
+       (contains? user-register	:pass-hash)
+       (not (clojure.string/blank? (user-register :user-name)))
        (not (clojure.string/blank? (user-register :email)))
-       (not (clojure.string/blank? (user-register :pass_hash)))))
+       (not (clojure.string/blank? (user-register :pass-hash)))))
 
 (defn valid-sign [user-sign]
-  (or (contains? user-sign :username)
+  (or (contains? user-sign :user-name)
       (contains? user-sign :email)
-      (not (clojure.string/blank? (user-sign :username)))
+      (not (clojure.string/blank? (user-sign :user-name)))
       (not (clojure.string/blank? (user-sign :email)))
-      (and (contains? user-sign	:pass_hash)
-      (not (clojure.string/blank? (user-sign :pass_hash))))))
+      (and (contains? user-sign	:pass-hash)
+      (not (clojure.string/blank? (user-sign :pass-hash))))))
 
 (defn register-not-exist? [count-register]
   (= (db/count-register count-register) 0))
 
 (defn register [content]
-    (db/save content))
+    (db/save-user {:userName (:user-name content) :email (:email content) :passHash (:pass-hash content)}))
 
-(defn- value-equals? [my-map value2]
-  (= (:pass_hash my-map) value2))
+(defn- value-equals? [value1 value2]
+  (= value1 value2))
 
-(defn eval-login [user-map pass_hash]
-  (if (value-equals? user-map pass_hash)
-    user-map
+(defn eval-login [user-map pass-hash]
+  (if user-map
+    (if (value-equals? (user-map :passHash) pass-hash)
+      user-map
+      [])
     []))
 
 (defn sign [content]
-  (eval-login (load-user content) (content :pass_hash) ))
+  (eval-login (load-user content) (content :pass-hash) ))
 
 
 

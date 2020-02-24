@@ -32,60 +32,71 @@
 
 (facts "user register"
        (db/clear)
-       (against-background (user-service/register {:username "admin" :email "admin@upnid.com" :pass_hash "@gd67grdfbf87fhb87b872dh27"}) => 
-                           {:id 1 :username "admin" :email "admin@upnid.com" :pass_hash "@gd67grdfbf87fhb87b872dh27"})
+       (against-background (user-service/register {:user-name "admin" :email "admin@upnid.com" :pass-hash "@gd67grdfbf87fhb87b872dh27"}) => 
+                           {:id 1 :user-name "admin" :email "admin@upnid.com" :pass-hash "@gd67grdfbf87fhb87b872dh27"})
        (let [response
              (app (-> (mock/request :post "/register")
-                      (mock/json-body {:username "admin" :email "admin@upnid.com" :pass_hash "@gd67grdfbf87fhb87b872dh27"})))]
+                      (mock/json-body {:user-name "admin" :email "admin@upnid.com" :pass-hash "@gd67grdfbf87fhb87b872dh27"})))]
          (fact "status response is 201" 
                (:status response) => 201)
          (fact "return json plus id"
-               (:body response) => "{\"id\":1,\"username\":\"admin\",\"email\":\"admin@upnid.com\",\"pass_hash\":\"@gd67grdfbf87fhb87b872dh27\"}")))
+               (:body response) => "{\"id\":1,\"user-name\":\"admin\",\"email\":\"admin@upnid.com\",\"pass-hash\":\"@gd67grdfbf87fhb87b872dh27\"}")))
 
 
-(facts "sign with username"
-       (against-background (user-service/sign {:username "admin" :pass_hash "@gd67grdfbf87fhb87b872dh27"}) => 
-                           {:id 1 :username "admin" :email "admin@upnid.com"})
+(facts "sign with user-name"
+       (against-background (user-service/sign {:user-name "admin" :pass-hash "@gd67grdfbf87fhb87b872dh27"}) => 
+                           {:id 1 :user-name "admin" :email "admin@upnid.com"})
        (let [response
                (app (-> (mock/request :post "/sign")
-                        (mock/json-body {:username "admin" :pass_hash "@gd67grdfbf87fhb87b872dh27"})))]
+                        (mock/json-body {:user-name "admin" :pass-hash "@gd67grdfbf87fhb87b872dh27"})))]
          (fact "status response is 200" 
                (:status response) => 200)
          (fact "return json plus id"
-               (:body response) => "{\"id\":1,\"username\":\"admin\",\"email\":\"admin@upnid.com\"}")))
+               (:body response) => "{\"id\":1,\"user-name\":\"admin\",\"email\":\"admin@upnid.com\"}")))
 
 (facts "sign with email"
-       (against-background (user-service/sign {:email "admin@upnid.com" :pass_hash "@gd67grdfbf87fhb87b872dh27"}) => 
-                           {:id 1 :username "admin" :email "admin@upnid.com" })
+       (against-background (user-service/sign {:email "admin@upnid.com" :pass-hash "@gd67grdfbf87fhb87b872dh27"}) => 
+                           {:id 1 :user-name "admin" :email "admin@upnid.com" })
        (let [response
                (app (-> (mock/request :post "/sign")
-                        (mock/json-body {:email "admin@upnid.com" :pass_hash "@gd67grdfbf87fhb87b872dh27"})))]
+                        (mock/json-body {:email "admin@upnid.com" :pass-hash "@gd67grdfbf87fhb87b872dh27"})))]
          (fact "status response is 200" 
                (:status response) => 200)
          (fact "return json plus id"
-               (:body response) => "{\"id\":1,\"username\":\"admin\",\"email\":\"admin@upnid.com\"}")))
+               (:body response) => "{\"id\":1,\"user-name\":\"admin\",\"email\":\"admin@upnid.com\"}")))
 
-(facts "send twitter"
-       (db/clear)
-       (against-background (twitter-service/twitter-post {:username "admin" :post (twitter-text 100)}) =>
-                           {:username "admin" :post (twitter-text 100)})
+(facts "send twitter"  
+       (user-service/register {:user-name "admin" :email "admin@upnid.com" :pass-hash "@gd67grdfbf87fhb87b872dh27"})
+       (against-background (twitter-service/twitter-post {:user-name "admin" :post (twitter-text 100)}) =>
+                           {:user-name "admin" :post (twitter-text 100)})
        (let [response
              (app (-> (mock/request :post "/twitter")
-                      (mock/json-body {:username "admin" :post (twitter-text 100)})))]
+                      (mock/json-body {:user-name "admin" :post (twitter-text 100)})))]
+         
          (fact "status response is 201"
                (:status response) => 201)
          ))
 
 (facts "my twitters"      
-       (against-background (twitter-service/my-twitters "admin") => [])
+       (against-background (twitter-service/my-twitters "admin" 0) => [])
        (let [response
              (app (-> (mock/request :get "/twitter/admin")))]
          (fact "status response is 200"
                (:status response) => 200))
        
-(facts "view twitter"      
-       (against-background (twitter-service/view-twitter "984729odasjda") => {:username "admin" :post (twitter-text 100)})
-       (let [response
-             (app (-> (mock/request :get "/twitter/admin/status/984729odasjda")))]
-         (fact "status response is 200"
-               (:status response) => 200))))
+       (facts "view twitter"      
+              (against-background (twitter-service/view-twitter "5e498f3088c75e0f4c95699a") => {:user-name "admin" :post (twitter-text 100)})
+              (let [response
+                    (app (-> (mock/request :get "/twitter/status/5e498f3088c75e0f4c95699a")))]
+                (fact "status response is 200"
+                      (:status response) => 200)))
+       
+       
+       (facts "like twitter"
+              (against-background (twitter-service/like-twitter {:user-name "admin" :user-twitter "admin" :twitter-oid "5e498f3088c75e0f4c95699a"}) => {:message "success" })
+              (let [response
+                    (app (-> (mock/request :post "/like")
+                             (mock/json-body  {:user-name "admin" :user-twitter "admin" :twitter-oid "5e498f3088c75e0f4c95699a"})))]                 
+                (fact "status response is 201"
+                      (:status response) => 201)))
+       )
