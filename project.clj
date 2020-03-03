@@ -21,4 +21,3 @@
          :plugins	[[lein-midje "3.2.1"]
                    [lein-cloverage "1.0.13"]]}}
   :test-paths	["test/acceptances" "test/units" "test"])
-
