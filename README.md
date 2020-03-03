@@ -1,121 +1,131 @@
-# Api Twitter usando Clojure
+# Api Twitter with Clojure
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-Api Twitter prover um serviço simplificado, escalável e de grande perfomance para os recursos mais comuns do Twitter
+Api Twitter it's a simple service that emulated the main resources from Twitter, it's still incomplete, but I will update regulary, the goals is have a complete service. 
 
-### Tecnologias
+### Technology
 
-Api Twitter utiliza alguns outras bibliotecas open source, são elas:
+Api Twitter use some open source libraries:
 
-* [Leininger] - Conhece o Mavem para Java, Gems para Ruby? Bom é isso que o Leininger é para o Clojure
-* [Ring] - Uma biblioteca para aplicações Web
-* [Cheshire] - Codificador Json
-* [Midje] - Excelente framework de testes para o Clojure
-* [Monger] - MongoDB cliente para Clojure com vasta documentação
+* [Leininger] - Do you know Maven for Java?, Gems for Ruby? Well this is what Leininger is for Clojure
+* [Ring] - A libray for web applications
+* [Cheshire] - Json encode/decode
+* [Midje] - Great framework to create test in for Clojure
+* [Monger] - MongoDB client for a lot of documentation
 
-Api Twitter também é um projeto open source, você pode baixar, usar e aprender bastante com ele.
+Api Twitter is also an open source project, you can download and learn much more with it.
  
 
-### Instalação
+### Install
 
-Api Intranet requer o Leininger, pode ser baixado aqui  [Leininger](https://leiningen.org/). Você irar precisar dele para executar o projeto, sua instalação é simples e para usuários do Windows existe um instalador aqui [Leininger Instalador Windows ](https://djpowell.github.io/leiningen-win-installer/) 
+Api Intranet require Leininger, you can download it here [Leininger](https://leiningen.org/). You will need it to run the project, the installation is super simple, if you are using windows there is an installer here [Leininger Windows Install ](https://djpowell.github.io/leiningen-win-installer/) 
 
-Após o Leininger ser instalado, basta entrar na raiz do projeto e executar o comando abaixo para instalar as dependências.
+After install Leininger, you can go to your project root path and run the command below, Leining will install all dependecies.
 
 ```sh
 $ lein deps
 ```
 
-Estamos quase prontos para executar o projeto, tenha certeza antes de ter o MongoDB instalado localmente na sua máquina.  Bom se tudo tiver certo execute o comando abaixo e o nosso serviço estará no ar!
+We are almost ready to run the project, make sure you have the MongoDB installed. If everything is ok, run the command below to start the service!
 
 ```sh
 $ lein ring server-headless
 ```
 
-Caso o seu MongoDB esteja instalado em outra porta ou máquina, vai ser necessário editar o arquivo db.clj e ajustar as configurações.
+If you MongoDB are not installed locally or using another port, you can edit the file db.clj and change the settings.
 
 
-### Consumindo o serviço
+### Services
 
-Você pode utilizar uma ferramenta externa para consumir o serviço, aconselho muito o [Insomnia](https://insomnia.rest/) ele é um cliente Rest que você vai amar. Api Twitter possui por enquanto os seguintes serviços:
+There is a lot of tools to connect with the services, but I recommend [Insomnia](https://insomnia.rest/) it's a great Rest client and you will love it. Api Twitter has for while the follow services
 
-| Função | Rota |
+| Name | Endppoint |
 | ------ | ------ |
-| Cadastrar Usuário |[POST] localhost:3000\register |
-| Autenticar Usuário |[POST] localhost:3000\sign |
-| Criar Twitter |[POST] localhost:3000\twitter|
-| Listar Meus Twitters | [GET] localhost:3000\twitter\\:user |
-| Ver Meu Twitter |[GET] localhost:3000\twitter\\:user\status\\:id |
+| Register User |[POST] localhost:3000\register |
+| Sign User |[POST] localhost:3000\sign |
+| Create Twitter |[POST] localhost:3000\twitter|
+| Like Twitter |[POST] localhost:3000\like|
+| List All My Twitter | [GET] localhost:3000\twitter\\:user |
+| See My Twitter |[GET] localhost:3000\twitter\\:status\\:id |
 
-Vamos ver agora alguns exemplos de como realizar o acesso de cada um desses serviços.
+Let's see some examples how you can use that services.
 
 ```sh
 [POST] localhost:3000\register
 {
-	"username" : "admin", 
-	"email": "admin@upnid.com", 
-	"pass_hash": "@gd67grdfbf87fhb87b872dh27"
+	"user-name" : "admin", 
+	"email": "admin1@upnid.com", 
+	"pass-hash": "@gd67grdfbf87fhb87b872dh27"
 }
 ```
 
 ```sh
 [POST] localhost:3000\sign 
 {
-	"username" : "admin", 
-	"pass_hash": "@gd67grdfbf87fhb87b872dh27"
+	"user-name" : "admin", 
+	"pass-hash": "@gd67grdfbf87fhb87b872dh27"
 }
 ```
 
 ```sh
 [POST] localhost:3000\twitter
 {
-	"username" :"admin", 
-	"post": "Esse meu twitter é da hora!"
+	"user-name" :"admin", 
+	"post": "My new twitter is so cool!"
 }
 ```
 
 ```sh
-[GET] localhost:3000\twitter\:user
+[POST] localhost:3000\like
+{
+	"user-name" :"admin", 
+	"user-twitter" :"admin", 
+	"twitter-oid": "5e4f27e9000efc3474cd9d37"
+}
 ```
 
 ```sh
-[GET] localhost:3000\twitter\:user\status\:id
+[GET] localhost:3000\twitter\admin
 ```
-### Testes
 
-Api Twitter foi construido utilizando a metodologia TDD(Test Driven Development), ou seja todo o desenvolvimento foi realizado orientado há testes, foram cerca de 30 testes entre unitários e de aceitação que podem ser facilmente executados usando o Leininger, é preciso estar na pasta do projeto.
+```sh
+[GET] localhost:3000\twitter\status\5e4f27e9000efc3474cd9d37
+```
+### Tests
 
-Lembre-se que ao executar os testes todos os dados criados através dos serviços serão apagados, lembre-se disso se for utilizar a rotina em ambiente de produção, mantenha os testes separados sempre! 
+Api Twitter was built using TDD(Test Driven Development), all development was guided by the tests, there are 40 now, between units tests and acceptance tests that can be easyle executed running with Leininger.
 
-Executando todos os testes:
+Remenber that when all the tests are executed, all data created in the database will be erase.
+
+Running all tests:
 ```sh
 $ lein midje
 ```
-Executando apenas os testes de aceitação
+Running only acceptance tests
 ```sh
 $ lein midje :filter acceptance
 ```
-Executando apenas os testes unitários
+Running only unit tests
 ```sh
 $ lein midje :filter -acceptance
 ```
 
-### Estrutura do projeto
+### Project Structure
 
-O projeto foi dividido em algumas camadas sendo assim temos:
+The project was divided as some layers:
 
-* [src/api_twitter/core.clj] - Esse aqui é digamos nosso main do projeto onde todas as requisições são empacotadas e nossas rotas criadas
-* [src/api_twitter/user_service.clj] - Esse arquivo recebe todas as requisições relacionadas ao usuários fazendo o envio para o banco de dados
-* [src/api_twitter/twitter_service.clj] - Esse arquivo recebe todas as requisições relacionadas aos twitters fazendo o envio para o banco de dados
-* [src/api_twitter/db.clj] - Realiza a conexão com o MongoDB e realiza todos os acessos a base
-* [test/acceptance/api_twitter/handller_acceptance_test.clj] - Nesse arquivo são realizados todos os testes de aceitação
-* [test/units/api_twitter/handller_unit_test.clj] - Nesse arquivo são realizados todos os testes unitários
-* [test/api_twitter/utils.clj] - Arquivos com funções uteis utilizados nos testes
+* [src/api_twitter/core.clj] - This is our main file, where all requests are packed and the routes are created.
+* [src/api_twitter/user_service.clj] - This file handle all logic related to users and send the data to the database service
+* [src/api_twitter/twitter_service.clj] - This file handle all logic related to twitters and send the data to the database service
+* [src/api_twitter/db.clj] - Make all connection with the MongoDB and receive all data from the services files
+* [test/acceptance/api_twitter/handller_acceptance_test.clj] - This file realize all acceptence tests
+* [test/units/api_twitter/handller_unit_test.clj] - This file realize all unit tests
+* [test/api_twitter/utils.clj] - File with some help functions for the tests
 
-#### Sobre o desafio técnico
+#### Next
 
-Como assim assim só funções??! Bem vindo a linguagem funcional. Esse desafio técnico me surpreendeu bastante, não poder utilizar um linguagem que você está acustumado me pegou de surpresa, mas foi uma surpresa boa, condizente com a vaga ofertada, foi o meu primeiro contato com uma liguagem funcional e adorei a experiência. Um novo aprendizado que pretendo evoluir e levar comigo para sempre.
+I am still planning use Elasticsearch, Redis and change the authentication to use OAuth2, lets try get some scalability and security in this project. New updates soon! :D
 
 
 
