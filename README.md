@@ -40,7 +40,7 @@ If you MongoDB are not installed locally or using another port, you can edit the
 
 There is a lot of tools to connect with the services, but I recommend [Insomnia](https://insomnia.rest/) it's a great Rest client and you will love it. Api Twitter has for while the follow services
 
-| Name | Endppoint |
+| Name | Endpoint |
 | ------ | ------ |
 | Register User |[POST] localhost:3000\register |
 | Sign User |[POST] localhost:3000\sign |
@@ -94,9 +94,9 @@ Let's see some examples how you can use that services.
 ```
 ### Tests
 
-Api Twitter was built using TDD(Test Driven Development), all development was guided by the tests, there are 40 now, between units tests and acceptance tests that can be easyle executed running with Leininger.
+Api Twitter was built using TDD(Test Driven Development), all development was guided by the tests, there are 40 now, between units tests and acceptance tests that can be easily executed running with Leininger.
 
-Remenber that when all the tests are executed, all data created in the database will be erase.
+Remenber that when all the tests are executed, all data created in the database will be erased.
 
 Running all tests:
 ```sh
