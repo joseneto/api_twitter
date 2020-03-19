@@ -123,9 +123,7 @@ The project was divided as some layers:
 * [test/units/api_twitter/handller_unit_test.clj] - This file realize all unit tests
 * [test/api_twitter/utils.clj] - File with some help functions for the tests
 
-#### Next
 
-I am still planning use Elasticsearch, Redis and change the authentication to use OAuth2, lets try get some scalability and security in this project. New updates soon! :D
 
 
 
